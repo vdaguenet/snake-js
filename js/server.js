@@ -10,6 +10,7 @@ exports.Server = Server = function () {
 
 Server.prototype.init = function(port) {
 	this.server = http.createServer(app);
+	app.use(Express.static(__dirname + '/../public'));
 	this.server.listen(port);
 
 	console.log('Server started, listening port : ' + port);
