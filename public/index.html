@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Websocket Snake Experiment</title>
+    <link rel="stylesheet" href="/css/styles.css">
+    <script defer type="text/javascript" src="js/jquery-1.6.2.min.js"></script>
+    <script defer type="text/javascript" src="http://localhost:5000/socket.io/socket.io.js"></script>
+    <script defer type="text/javascript" src="js/client.js"></script>
+  </head>
+  <body>
+    <h1>
+      Websocket Snake Experiment
+    </h1>
+    <div id="scoreboard">
+      <span id="kills">Kills: <span>0</span></span> -
+      <span id="goodies">Goodies: <span>0</span></span> -
+      <span id="deaths">Deaths: <span>0</span></span>
+      <span id="score">Score: <span>0</span></span>
+    </div>
+    <canvas id="stage" width="500" height="500">
+      Canvas not supported.
+    </canvas>
+  </body>
+</html>
