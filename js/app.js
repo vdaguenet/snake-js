@@ -16,6 +16,10 @@ server.em.addListener('Snake.disconnect', function (snakeId) {
     delete snakes[snakeId]; // delete snake from array
 });
 
+server.em.addListener('Snake.movement', function (direction, snakeId) {
+    snakes[snakeId].setDirection(direction);
+});
+
 var tick = setInterval(function () {
 	server.update(snakes);
 
@@ -23,3 +27,4 @@ var tick = setInterval(function () {
 		snakes[i].doStep(); // Move the snake
 	}
 }, 100); // function executed every 100 ms
+

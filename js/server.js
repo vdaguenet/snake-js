@@ -38,8 +38,12 @@ Server.prototype.startSockets = function () {
 		this.em.emit('Snake.newSnake', client.snakeId);
 
 		client.on('disconnect', function () { // Disconnection to dont have a new client on every refresh
-			console.log('Client #' + client.snakeId + ' disconnected.');
 			this.em.emit('Snake.disconnect', client.snakeId);
+			console.log('Client #' + client.snakeId + ' disconnected.');
+		}.bind(this));
+	
+		client.on('movement', function (direction) {
+			this.em.emit('Snake.movement', direction, client.snakeId);
 		}.bind(this));
 	}.bind(this));
 };

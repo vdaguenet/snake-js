@@ -70,3 +70,9 @@ Snake.prototype.moveHead = function() {
 		break;
 	}
 };
+
+Snake.prototype.setDirection = function(direction) {
+	if (direction != this.direction && !(this.direction == 'right' && direction == 'left') && !(this.direction == 'left' && direction == 'right') && !(this.direction == 'top' && direction == 'down') && !(this.direction == 'down' && direction == 'top')) {
+		this.direction = direction;
+	}
+};

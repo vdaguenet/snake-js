@@ -10,8 +10,9 @@ var canvas,
 $(function () { // $(function for document.ready
 	canvas = $('#stage');
 	context = canvas.get(0).getContext('2d'); // get(0) return javascript native element, without jQuery
-
 	connect();
+
+
 });
 
 function connect () {
@@ -25,6 +26,23 @@ function connect () {
 	server.on('update', function (snakes) { // draw cnvas on each update 
 		drawCanvas(snakes);
 	});
+
+	document.addEventListener('keydown', function(event) {
+		var direction = 'other';
+	    if (event.keyCode == 37) {
+	    	direction = 'left';
+	    }
+	    else if (event.keyCode == 38) {
+	    	direction = 'top';
+	    }
+	    else if (event.keyCode == 39) {
+	    	direction = 'right';
+	    }
+	    else if (event.keyCode == 40) {
+	    	direction = 'down';
+	    }
+	    server.emit('movement', direction);
+	}, true);
 }
 
 function drawCanvas (snakes) {
@@ -37,7 +55,7 @@ function drawCanvas (snakes) {
 	}
 
 	// Draw snakes
-	context.fillStyle = "rgba(255, 0, 0, 0.8)";
+	context.fillStyle = "rgba(75, 0, 130, 0.6)";
 	for (var i in snakes) {
 		for (var j = 0; j < snakes[i].currentLength; j++) {
 			context.fillRect(snakes[i].elements[j].x*BLOCK_WIDTH, snakes[i].elements[j].y*BLOCK_HEIGTH, BLOCK_WIDTH-1, BLOCK_HEIGTH-1);
