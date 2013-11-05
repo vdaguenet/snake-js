@@ -14,8 +14,11 @@ Snake.prototype.init = function(snakeId) {
 	this.elements = [];
 	this.direction = 'right';
 
-	var rand = Math.floor(Math.random() * this.STAGE_HEIGHT);
+	this.initElements();
+};
 
+Snake.prototype.initElements = function() {
+	var rand = Math.floor(Math.random() * this.STAGE_HEIGHT);
 	for (var i = this.currentLength; i > 0; i--) {
 		this.elements.push({x: -i, y: rand});
 	}
@@ -26,7 +29,6 @@ Snake.prototype.doStep = function() {
 	for (var i = 0; i < this.currentLength-1; i++) {
 		this.moveBlock(i);
 	}
-
 	this.moveHead();
 };
 
@@ -75,4 +77,26 @@ Snake.prototype.setDirection = function(direction) {
 	if (direction != this.direction && !(this.direction == 'right' && direction == 'left') && !(this.direction == 'left' && direction == 'right') && !(this.direction == 'top' && direction == 'down') && !(this.direction == 'down' && direction == 'top')) {
 		this.direction = direction;
 	}
+};
+
+Snake.prototype.reset = function() {
+	this.currentLength = this.SNAKE_LENGTH;
+	this.elements = [];
+	this.initElements();
+	this.direction = 'right';
+};
+
+Snake.prototype.onDie = function() {
+	this.reset();
+	this.deaths++;
+};
+
+Snake.prototype.hasColision = function(element) {
+	var head = this.elements[this.currentLength-1];
+
+	if(element.x == head.x && element.y == head.y) {
+		return true;
+	}
+
+	return false;
 };

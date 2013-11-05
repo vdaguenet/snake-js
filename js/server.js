@@ -41,10 +41,11 @@ Server.prototype.startSockets = function () {
 			this.em.emit('Snake.disconnect', client.snakeId);
 			console.log('Client #' + client.snakeId + ' disconnected.');
 		}.bind(this));
-	
-		client.on('movement', function (direction) {
-			this.em.emit('Snake.movement', direction, client.snakeId);
+
+		client.on('movement', function (direction) { // get direction from client.js
+			this.em.emit('Snake.movement', {direction : direction, snakeId: client.snakeId}); // Send the direction chose by client to app.js
 		}.bind(this));
+
 	}.bind(this));
 };
 
