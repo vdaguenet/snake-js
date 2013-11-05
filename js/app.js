@@ -1,17 +1,25 @@
 var Server = require('./server.js').Server,
 	Snake = require('./snake.js').Snake;
 
-var server = new Server(); // instancie le serveur.
+var server = new Server();
 server.init(5000);
 
-var snakes = {};
+var snakes = {}; // snakes array
 
 server.em.addListener('Snake.newSnake', function (snakeId) {
 	var snake = new Snake();
 	snake.init(snakeId);
-	snakes[snakeId] = snake;
+	snakes[snakeId] = snake; // add the new snake in the array
+});
+
+server.em.addListener('Snake.disconnect', function (snakeId) {
+    delete snakes[snakeId]; // delete snake from array
 });
 
 var tick = setInterval(function () {
 	server.update(snakes);
-}, 100); // la fonction sera executée toute les 100 ms
+
+	for ( var i in snakes) {
+		snakes[i].doStep(); // Move the snake
+	}
+}, 100); // function executed every 100 ms

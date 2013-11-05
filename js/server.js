@@ -4,12 +4,13 @@ var Express = require('express'),
 	events = require('events'),
 	io = require('socket.io');
 
-// Export est l'équivalent de public (non dispo en JS)
-// Le constructeur est placé dans la variable Server. Permet de ne pas réécrire exports à chaque méthode.
+// Export is equivalent to public (unavailable in JS)
+// Variable Server contains the constructor for not rewrite 'exports' before each method
 exports.Server = Server = function () {
 	this.clientId = 1;
 };
 
+// Initialization of server
 Server.prototype.init = function(port) {
 	this.server = http.createServer(app);
 	app.use(Express.static(__dirname + '/../public'));
@@ -20,24 +21,26 @@ Server.prototype.init = function(port) {
 	console.log('Server started, listening port : ' + port);
 };
 
+// Initialization of sockets
 Server.prototype.startSockets = function () {
-	this.socket = io.listen(this.server);
+	this.socket = io.listen(this.server); // the socket listen the server
 
 	this.socket.configure(function () {
-		this.socket.set('log level', 1);
-	}.bind(this)); // this de la closure = this du parent
+		this.socket.set('log level', 1); // set the log level
+	}.bind(this)); // this closure = this parent
 
-	this.socket.of('/snake').on('connection', function (client) {
-		client.snakeId = this.clientId;
+	this.socket.of('/snake').on('connection', function (client) { // Set snakeId on each client connection
+		client.snakeId = this.clientId; 
 		this.clientId++;
 		console.log('Client #' + client.snakeId + ' is connected.');
 
-		client.emit('response', {snakeId: client.snakeId});
+		client.emit('response', {snakeId: client.snakeId}); // Send response to client
 		this.em.emit('Snake.newSnake', client.snakeId);
 
-		client.on('disconnect', function () {
+		client.on('disconnect', function () { // Disconnection to dont have a new client on every refresh
 			console.log('Client #' + client.snakeId + ' disconnected.');
-		});
+			this.em.emit('Snake.disconnect', client.snakeId);
+		}.bind(this));
 	}.bind(this));
 };
 
