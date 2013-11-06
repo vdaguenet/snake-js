@@ -105,6 +105,11 @@ Snake.prototype.onBonus = function() {
 	this.score += 5;
 };
 
+Snake.prototype.onPortal = function() {
+	this.elements[this.currentLength-1].x = Math.floor(Math.random() * this.STAGE_WIDTH);
+	this.elements[this.currentLength-1].y = Math.floor(Math.random() * this.STAGE_HEIGHT);
+};
+
 Snake.prototype.hasColision = function(element) {
 	var head = this.elements[this.currentLength-1];
 

@@ -1,12 +1,18 @@
 var Server = require('./server.js').Server,
 	Snake = require('./snake.js').Snake,
+	Bomb = require('./bomb.js').Bomb,
+	Portal = require('./portal.js').Portal,
 	Bonus = require('./bonus.js').Bonus;
 
 var server = new Server();
 server.init(5000);
 
 var snakes = {}, // snakes array
- 	bonuses = []; // bonus array
+ 	bonuses = [],
+ 	portals = [],
+ 	bombs = []; // bonus array
+
+createBonuses();
 
 server.em.addListener('Snake.newSnake', function (snakeId) {
 	var snake = new Snake();
@@ -32,8 +38,10 @@ function checkColisions () {
 					continue;
 				}
 				if (snakes[s1].hasColision(snakes[s2].elements[i])) { // s1 touch s2
-					resetSnakes.push(snakes[s1]); // save snake in array 
-					snakes[s2].onKill();
+					resetSnakes.push(snakes[s1]); // save snake in array
+					if (snakes[s1].id != snakes[s2].id ) { // When s1 kills itself
+						snakes[s2].onKill();
+					}
 				}
 			}
 		}
@@ -41,11 +49,24 @@ function checkColisions () {
 		for (var j in bonuses) {
 			if (snakes[s1].hasColision(bonuses[j])) { // s1 touch a bonus
 				bonuses[j].onTouch(snakes[s1]);
-				bonuses.splice(j, 1);
-				
 				break;
 			}	
 		}
+
+		for (var k in bombs) {
+			if (snakes[s1].hasColision(bombs[k])) { // s1 touch a bonus
+				bombs[k].onTouch(snakes[s1]);
+				bombs.splice(j, 1);
+				break;
+			}	
+		}
+
+		for ( var l in portals) {
+			if (snakes[s1].hasColision(portals[l])) { // s1 touch a bonus
+				portals[l].onTouch(snakes[s1]);
+			}
+		}
+		
 	}
 
 	// Kill the snakes
@@ -59,11 +80,19 @@ var tick = setInterval(function () {
 		snakes[i].doStep(); // Move the snake
 	}
 	checkColisions();
-	server.update(snakes, bonuses);
+	server.update(snakes, bonuses, bombs, portals);
 }, 100); // function executed every 100 ms
 
-var tick_bonus = setInterval(function () {
-	bonuses.push(new Bonus());
+function createBonuses() {
+	for (var i = 0; i < 2; i++) {
+		portals.push(new Portal());
+		bonuses.push(new Bonus());
+	}
+}
 
-	server.update(snakes, bonuses);
-}, 3000); // add new bonus eah 3s
+// Create a bomb each 5s
+var tickBomb = setInterval(function () {
+	bombs.push(new Bomb());
+
+	server.update(snakes, bonuses, bombs, portals);
+}, 5000);

@@ -49,6 +49,6 @@ Server.prototype.startSockets = function () {
 	}.bind(this));
 };
 
-Server.prototype.update = function(snakes, bonuses) {
-	this.socket.of('/snake').emit('update', snakes, bonuses);
+Server.prototype.update = function(snakes, bonuses, bombs, portals) {
+	this.socket.of('/snake').emit('update', snakes, bonuses, bombs, portals);
 };

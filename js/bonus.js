@@ -13,6 +13,7 @@ Bonus.prototype.init = function() {
 };
 
 Bonus.prototype.onTouch = function(snake) {
+	this.init();
 	snake.onBonus();
 	snake.grow();
 };
