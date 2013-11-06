@@ -24,7 +24,7 @@ function connect () {
 
 	server.on('update', function (snakes, bonuses, bombs, portals) { // draw canvas on each update 
 		drawCanvas(snakes, bonuses, bombs, portals);
-		updateScores(snakes);
+		updateScores(snakes); // Changes scores
 	});
 }
 
@@ -44,9 +44,9 @@ function drawCanvas (snakes, bonus, bombs, portals) {
 			opacity += 0.1;
 
 			if (snakes[i].id == snakeId) {
-				context.fillStyle = "rgba(50, 12, 205," + opacity + ")";
+				context.fillStyle = "rgba(65, 105, 225," + opacity + ")";
 			} else {
-				context.fillStyle = "rgba(75, 0, 130, " + opacity + ")";
+				context.fillStyle = "rgba(186, 85, 211, " + opacity + ")";
 			}
 			
 			context.fillRect(snakes[i].elements[j].x*BLOCK_WIDTH, snakes[i].elements[j].y*BLOCK_HEIGTH, BLOCK_WIDTH-1, BLOCK_HEIGTH-1);
@@ -73,6 +73,7 @@ function drawCanvas (snakes, bonus, bombs, portals) {
 
 }
 
+// Get the key taped on keybord
 function getKey () {
 	document.addEventListener('keydown', function(event) { // Get the key taped and set the direction
 		var direction = 'other';
@@ -89,6 +90,7 @@ function getKey () {
 	}, true);
 }
 
+// Change score values on user interface
 function updateScores (snakes) {
 	var div = '';
 	for (var a in snakes) {

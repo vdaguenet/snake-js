@@ -19,6 +19,7 @@ Snake.prototype.init = function(snakeId) {
 	this.initElements();
 };
 
+// Initialization of parts of snake
 Snake.prototype.initElements = function() {
 	var rand = Math.floor(Math.random() * this.STAGE_HEIGHT);
 	for (var i = this.currentLength; i > 0; i--) {
@@ -75,12 +76,14 @@ Snake.prototype.moveHead = function() {
 	}
 };
 
+// Change direction of snake
 Snake.prototype.setDirection = function(direction) {
 	if (direction != this.direction && !(this.direction == 'right' && direction == 'left') && !(this.direction == 'left' && direction == 'right') && !(this.direction == 'top' && direction == 'down') && !(this.direction == 'down' && direction == 'top')) {
 		this.direction = direction;
 	}
 };
 
+// Re init snake after die
 Snake.prototype.reset = function() {
 	this.goodies = 0;
 	this.currentLength = this.SNAKE_LENGTH;
@@ -89,6 +92,7 @@ Snake.prototype.reset = function() {
 	this.direction = 'right';
 };
 
+// Actions on die / bonuses / portals / bombs
 Snake.prototype.onDie = function() {
 	this.reset();
 	this.deaths++;
@@ -109,6 +113,8 @@ Snake.prototype.onPortal = function() {
 	this.elements[this.currentLength-1].x = Math.floor(Math.random() * this.STAGE_WIDTH);
 	this.elements[this.currentLength-1].y = Math.floor(Math.random() * this.STAGE_HEIGHT);
 };
+
+// Check the contact with an element 
 
 Snake.prototype.hasColision = function(element) {
 	var head = this.elements[this.currentLength-1];

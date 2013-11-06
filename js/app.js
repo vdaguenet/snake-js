@@ -62,7 +62,7 @@ function checkColisions () {
 		}
 
 		for ( var l in portals) {
-			if (snakes[s1].hasColision(portals[l])) { // s1 touch a bonus
+			if (snakes[s1].hasColision(portals[l])) { // s1 touch a portal
 				portals[l].onTouch(snakes[s1]);
 			}
 		}
@@ -83,7 +83,7 @@ var tick = setInterval(function () {
 	server.update(snakes, bonuses, bombs, portals);
 }, 100); // function executed every 100 ms
 
-function createBonuses() {
+function createBonuses() { // Init bonuses and portals
 	for (var i = 0; i < 2; i++) {
 		portals.push(new Portal());
 		bonuses.push(new Bonus());
