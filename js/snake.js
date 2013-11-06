@@ -11,6 +11,7 @@ Snake.prototype.init = function(snakeId) {
 	this.goodies = 0;
 	this.kills = 0;
 	this.deaths = 0;
+	this.score = 0;
 	this.currentLength = this.SNAKE_LENGTH;
 	this.elements = [];
 	this.direction = 'right';
@@ -91,6 +92,17 @@ Snake.prototype.reset = function() {
 Snake.prototype.onDie = function() {
 	this.reset();
 	this.deaths++;
+	this.score /= 2;
+};
+
+Snake.prototype.onKill = function() {
+	this.kills++;
+	this.score += 10;
+};
+
+Snake.prototype.onBonus = function() {
+	this.goodies++;
+	this.score += 5;
 };
 
 Snake.prototype.hasColision = function(element) {

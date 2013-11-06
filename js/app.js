@@ -33,7 +33,7 @@ function checkColisions () {
 				}
 				if (snakes[s1].hasColision(snakes[s2].elements[i])) { // s1 touch s2
 					resetSnakes.push(snakes[s1]); // save snake in array 
-					snakes[s2].kills++;
+					snakes[s2].onKill();
 				}
 			}
 		}
