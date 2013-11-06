@@ -8,6 +8,7 @@ exports.Snake = Snake = function() {
 // Init the snake
 Snake.prototype.init = function(snakeId) {
 	this.id = snakeId;
+	this.goodies = 0;
 	this.kills = 0;
 	this.deaths = 0;
 	this.currentLength = this.SNAKE_LENGTH;
@@ -80,6 +81,7 @@ Snake.prototype.setDirection = function(direction) {
 };
 
 Snake.prototype.reset = function() {
+	this.goodies = 0;
 	this.currentLength = this.SNAKE_LENGTH;
 	this.elements = [];
 	this.initElements();
@@ -99,4 +101,13 @@ Snake.prototype.hasColision = function(element) {
 	}
 
 	return false;
+};
+
+
+// Add a new element on the snake
+Snake.prototype.grow = function() {
+	var old_pos = this.elements[0];
+
+	this.elements.unshift({x: old_pos.x, y: old_pos.y});
+	this.currentLength++;
 };
