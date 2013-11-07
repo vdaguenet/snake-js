@@ -1,4 +1,5 @@
 body {
+  margin: auto;
   background-color: #fff;
   font-family: 'Trebuchet MS', 'Helvetica Neue', Arial, Sans-serif;
   color: #222;
@@ -11,6 +12,9 @@ h1 {
   margin-bottom: 2px;
   text-align: center;
   font-size: 32px;
+}
+h2 {
+  text-align: center;
 }
  
 a, a:active, a:visited {
@@ -32,6 +36,12 @@ a:hover {
   text-align: center;
   padding: 0;
   padding-bottom: 12px;
+}
+
+#scoreboard_others {
+  margin: 0 auto 0 auto;
+  font-size: 14px;
+  width: 500px;
 }
  
 #stage {
