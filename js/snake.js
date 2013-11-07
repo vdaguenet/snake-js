@@ -109,6 +109,17 @@ Snake.prototype.onBonus = function() {
 	this.score += 5;
 };
 
+Snake.prototype.onBomb = function() {
+	if(this.currentLength > 1) {
+		for (var i = (this.currentLength/2); i < this.currentLength-2; i++) {
+			delete this.elements[i];	
+		}
+		this.currentLength /= 2;
+	} else {
+		this.onDie();
+	}
+};
+
 Snake.prototype.onPortal = function() {
 	this.elements[this.currentLength-1].x = Math.floor(Math.random() * this.STAGE_WIDTH);
 	this.elements[this.currentLength-1].y = Math.floor(Math.random() * this.STAGE_HEIGHT);
