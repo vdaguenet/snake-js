@@ -1,7 +1,6 @@
 var Server = require('./server.js').Server,
 	Snake = require('./snake.js').Snake,
 	Bomb = require('./bomb.js').Bomb,
-	Wall = require('./wall.js').Wall,
 	Portal = require('./portal.js').Portal,
 	Bonus = require('./bonus.js').Bonus;
 
@@ -10,8 +9,6 @@ server.init(5000);
 
 var snakes = {}, // snakes array
  	bonuses = [],
- 	portals = [],
- 	walls = [],
  	bombs = []; // bonus array
 
 createBonuses();
@@ -57,23 +54,11 @@ function checkColisions () {
 
 		for (var k in bombs) {
 			if (snakes[s1].hasColision(bombs[k])) { // s1 touch a bonus
-				bombs[k].onTouch(snakes[s1], snakes);
-				bombs.splice(k, 1);
+				bombs[k].onTouch(snakes[s1]);
+				bombs.splice(j, 1);
 				break;
 			}	
 		}
-
-		for ( var l in portals) {
-			if (snakes[s1].hasColision(portals[l])) { // s1 touch a portal
-				portals[l].onTouch(snakes[s1]);
-			}
-		}
-
-		for ( var m in walls) {
-			if (snakes[s1].hasColision(walls[m])) { // s1 touch a wall
-				walls[m].onTouch(snakes[s1]);
-			}
-		}		
 	}
 
 	// Kill the snakes
@@ -87,32 +72,19 @@ var tick = setInterval(function () {
 		snakes[i].doStep(); // Move the snake
 	}
 	checkColisions();
-	server.update(snakes, bonuses, bombs, portals, walls);
+	server.update(snakes, bonuses, bombs);
 }, 100); // function executed every 100 ms
 
-function createBonuses() { // Init bonuses and portals
+function createBonuses() { // Init bonuses
 	for (var i = 0; i < 2; i++) {
-		portals.push(new Portal());
+		bonuses.push(new Portal());
 		bonuses.push(new Bonus());
 	}
 }
 
-// Create or change position of a bomb each 5s
+// Create a bomb each 5s
 var tickBomb = setInterval(function () {
-	if (bombs.length >= 3) {
-		var cpt = Math.floor(Math.random() * 3);
-		bombs[cpt].init();
-	} else {
-		bombs.push(new Bomb());
-	}
+	bombs.push(new Bomb());
 
-	server.update(snakes, bonuses, bombs, portals, walls);
+	server.update(snakes, bonuses, bombs);
 }, 5000);
-
-// Create walls each 5s
-var tickWall = setInterval(function () {
-
-	walls.push(new Wall());
-	server.update(snakes, bonuses, bombs, portals, walls);
-
-}, 3000);

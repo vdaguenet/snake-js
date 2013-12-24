@@ -22,13 +22,13 @@ function connect () {
 		snakeId = data.snakeId;
 	});
 
-	server.on('update', function (snakes, bonuses, bombs, portals, walls) { // draw canvas on each update 
-		drawCanvas(snakes, bonuses, bombs, portals, walls);
+	server.on('update', function (snakes, bonuses, bombs) { // draw canvas on each update 
+		drawCanvas(snakes, bonuses, bombs);
 		updateScores(snakes); // Changes scores
 	});
 }
 
-function drawCanvas (snakes, bonus, bombs, portals, walls) {
+function drawCanvas (snakes, bonuses, bombs) {
 	context.fillStyle = '#ddd'; // grey background
 
 	for (var x = 0; x < STAGE_WIDTH; x++) {
@@ -54,9 +54,9 @@ function drawCanvas (snakes, bonus, bombs, portals, walls) {
 	}
 
 	// Draw bonus
-	for (var k in bonus) {
-		context.fillStyle = bonus[k].color;
-		context.fillRect(bonus[k].x*BLOCK_WIDTH, bonus[k].y*BLOCK_HEIGTH, BLOCK_WIDTH-1, BLOCK_HEIGTH-1);
+	for (var k in bonuses) {
+		context.fillStyle = bonuses[k].color;
+		context.fillRect(bonuses[k].x*BLOCK_WIDTH, bonuses[k].y*BLOCK_HEIGTH, BLOCK_WIDTH-1, BLOCK_HEIGTH-1);
 	}
 
 	// Draw bombs
@@ -64,19 +64,6 @@ function drawCanvas (snakes, bonus, bombs, portals, walls) {
 		context.fillStyle = bombs[l].color;
 		context.fillRect(bombs[l].x*BLOCK_WIDTH, bombs[l].y*BLOCK_HEIGTH, BLOCK_WIDTH-1, BLOCK_HEIGTH-1);
 	}
-
-	// Draw portal
-	for ( var m in portals) {
-		context.fillStyle = portals[m].color;
-		context.fillRect(portals[m].x*BLOCK_WIDTH, portals[m].y*BLOCK_HEIGTH, BLOCK_WIDTH-1, BLOCK_HEIGTH-1);
-	}
-
-	// Draw walls
-	for ( var z in walls) {
-		context.fillStyle = walls[z].color;
-		context.fillRect(walls[z].x*BLOCK_WIDTH, walls[z].y*BLOCK_HEIGTH, BLOCK_WIDTH-1, BLOCK_HEIGTH-1);
-	}
-
 }
 
 // Get the key taped on keybord
