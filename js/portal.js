@@ -1,3 +1,7 @@
+/**
+* Portal
+* Teleport snake to a random position
+*/
 exports.Portal = Portal = function () {
 	this.STAGE_HEIGHT = 50 - 1;
 	this.STAGE_WIDTH = 50 - 1;

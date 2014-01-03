@@ -1,35 +1,41 @@
 var canvas,
 	cantext,
-	STAGE_WIDTH = 50, // Nomber of blocks
+	STAGE_WIDTH = 50,
 	STAGE_HEIGTH = 50, 
-	BLOCK_WIDTH = 10, // block size
+	BLOCK_WIDTH = 10,
 	BLOCK_HEIGTH = 10,
 	server,
 	snakeId;
 
-$(function () { // $(function for document.ready
+$(function () {
 	canvas = $('#stage');
 	context = canvas.get(0).getContext('2d'); // get(0) return javascript native element, without jQuery
 	connect();
 	getKey();
 });
 
+/**
+* Connection to server via socket.io & Canvas update.
+*/
 function connect () {
-	server = io.connect('http://localhost:5000/snake'); // connect to socket
-
-	server.on('response', function (data) { // Waiting for response from server with the id
-		console.log('Snake #' + data.snakeId);
+	server = io.connect('http://localhost:5000/snake');
+	// Waiting for response from server with the id
+	server.on('response', function (data) { 
 		snakeId = data.snakeId;
 	});
-
-	server.on('update', function (snakes, bonuses, bombs) { // draw canvas on each update 
+	// draw canvas on each update 
+	server.on('update', function (snakes, bonuses, bombs) { 
 		drawCanvas(snakes, bonuses, bombs);
-		updateScores(snakes); // Changes scores
+		updateScores(snakes);
 	});
 }
 
+/**
+* Draw canvas with snakes and others elements
+*/
 function drawCanvas (snakes, bonuses, bombs) {
-	context.fillStyle = '#ddd'; // grey background
+	// background
+	context.fillStyle = '#ddd'; 
 
 	for (var x = 0; x < STAGE_WIDTH; x++) {
 		for (var y = 0; y < STAGE_HEIGTH; y++) {
@@ -66,9 +72,12 @@ function drawCanvas (snakes, bonuses, bombs) {
 	}
 }
 
-// Get the key taped on keybord
+/**
+* Get the key taped on keybord and emit corresponding event
+*/
 function getKey () {
-	document.addEventListener('keydown', function(event) { // Get the key taped and set the direction
+	// Get the key taped and set the direction
+	document.addEventListener('keydown', function(event) { 
 		var direction = 'other';
 		
 		switch(event.keyCode) {
@@ -78,26 +87,27 @@ function getKey () {
 			case 40 : direction = 'down'; break;
 			default: return false;
 		}
-
-	    server.emit('movement', direction); // Send signal to server with the direction as parameter
+		// Send signal to server with the direction as parameter
+	  server.emit('movement', direction); 
 	}, true);
 }
 
-// Change score values on user interface
+/**
+* Change score values on user interface
+*/
 function updateScores (snakes) {
 	var div = '';
 	for (var a in snakes) {
 		div += '<span id="snakeId'+snakes[a].id+'">Snake #<span>'+snakes[a].id+'</span></span> - <span id="score_'+snakes[a].id+'">Score: <span>0</span></span><br />';
 	}
 	$('#scoreboard_others').html(div);
+	
 	for (var i in snakes) {
-
 		if (snakes[i].id == snakeId) {
 			$('#kills span').html(snakes[i].kills);
 			$('#goodies span').html(snakes[i].goodies);
 			$('#deaths span').html(snakes[i].deaths);
 			$('#score span').html(snakes[i].score);
-
 			$('#snakeId'+snakes[i].id).css('color', 'blue');
 			$('#score_'+snakes[i].id).css('color', 'blue');
 		}

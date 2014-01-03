@@ -1,3 +1,6 @@
+/**
+* Includes
+*/
 var Express = require('express'),
 	http = require('http'),
 	app = Express(),
@@ -10,7 +13,9 @@ exports.Server = Server = function () {
 	this.clientId = 1;
 };
 
-// Initialization of server
+/**
+* Server initialization
+*/
 Server.prototype.init = function(port) {
 	this.server = http.createServer(app);
 	app.use(Express.static(__dirname + '/../public'));
@@ -21,34 +26,46 @@ Server.prototype.init = function(port) {
 	console.log('Server started, listening port : ' + port);
 };
 
-// Initialization of sockets
+/**
+* Sockets settings
+*/
 Server.prototype.startSockets = function () {
-	this.socket = io.listen(this.server); // the socket listen the server
-
+	// the socket listen the server
+	this.socket = io.listen(this.server); 
+	
+	// set the log level
 	this.socket.configure(function () {
-		this.socket.set('log level', 1); // set the log level
-	}.bind(this)); // this closure = this parent
-
-	this.socket.of('/snake').on('connection', function (client) { // Set snakeId on each client connection
+		this.socket.set('log level', 1); 
+	}.bind(this));
+	
+	// Set snakeId on each client connection
+	this.socket.of('/snake').on('connection', function (client) { 
 		client.snakeId = this.clientId; 
 		this.clientId++;
 		console.log('Client #' + client.snakeId + ' is connected.');
-
-		client.emit('response', {snakeId: client.snakeId}); // Send response to client
+		
+		// Send response to client
+		client.emit('response', {snakeId: client.snakeId}); 
 		this.em.emit('Snake.newSnake', client.snakeId);
-
-		client.on('disconnect', function () { // Disconnection to dont have a new client on every refresh
+		
+		// Disconnection to dont have a new client on every refresh
+		client.on('disconnect', function () { 
 			this.em.emit('Snake.disconnect', client.snakeId);
 			console.log('Client #' + client.snakeId + ' disconnected.');
 		}.bind(this));
-
-		client.on('movement', function (direction) { // get direction from client.js
-			this.em.emit('Snake.movement', {direction : direction, snakeId: client.snakeId}); // Send the direction chose by client to app.js
+		
+		// get direction from client.js
+		client.on('movement', function (direction) { 
+			// Send the direction chose by client to app.js
+			this.em.emit('Snake.movement', {direction : direction, snakeId: client.snakeId}); 
 		}.bind(this));
 
 	}.bind(this));
 };
 
+/**
+* Event to drow canvas with all elements present
+*/
 Server.prototype.update = function(snakes, bonuses, bombs) {
 	this.socket.of('/snake').emit('update', snakes, bonuses, bombs);
 };

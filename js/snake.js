@@ -1,11 +1,15 @@
-// Constructor. Init constant values
+/**
+* Constructor. Init constant values
+*/
 exports.Snake = Snake = function() {
 	this.SNAKE_LENGTH = 8;
 	this.STAGE_HEIGHT = 50 - 1;
 	this.STAGE_WIDTH = 50 - 1;
 };
 
-// Init the snake
+/**
+* Init the snake
+*/
 Snake.prototype.init = function(snakeId) {
 	this.id = snakeId;
 	this.goodies = 0;
@@ -19,7 +23,9 @@ Snake.prototype.init = function(snakeId) {
 	this.initElements();
 };
 
-// Initialization of parts of snake
+/**
+* Snake's parts initialization
+*/
 Snake.prototype.initElements = function() {
 	var rand = Math.floor(Math.random() * this.STAGE_HEIGHT);
 	for (var i = this.currentLength; i > 0; i--) {
@@ -27,7 +33,9 @@ Snake.prototype.initElements = function() {
 	}
 };
 
-// Function for snake movement
+/**
+* Snake movements
+*/
 Snake.prototype.doStep = function() {
 	for (var i = 0; i < this.currentLength-1; i++) {
 		this.moveBlock(i);
@@ -35,13 +43,18 @@ Snake.prototype.doStep = function() {
 	this.moveHead();
 };
 
-// Current block takes next block coordonates
+/**
+* Current block takes next block coordonates
+*/
 Snake.prototype.moveBlock = function(i) {
 	this.elements[i].x = this.elements[i+1].x;
 	this.elements[i].y = this.elements[i+1].y;
 };
 
-// Movement of the head of the snake in function of direction. Go back to the bigining if the snake reach the end of canvas
+/**
+* Movement of the head of the snake in function of direction.
+* Go back to the bigining if the snake reach the end of canvas
+*/
 Snake.prototype.moveHead = function() {
 	var head = this.elements[this.currentLength-1];
 
@@ -76,14 +89,18 @@ Snake.prototype.moveHead = function() {
 	}
 };
 
-// Change direction of snake
+/**
+* Change direction of snake
+*/
 Snake.prototype.setDirection = function(direction) {
 	if (direction != this.direction && !(this.direction == 'right' && direction == 'left') && !(this.direction == 'left' && direction == 'right') && !(this.direction == 'top' && direction == 'down') && !(this.direction == 'down' && direction == 'top')) {
 		this.direction = direction;
 	}
 };
 
-// Re init snake after die
+/**
+* Re init snake after die
+*/
 Snake.prototype.reset = function() {
 	this.goodies = 0;
 	this.currentLength = this.SNAKE_LENGTH;
@@ -92,30 +109,42 @@ Snake.prototype.reset = function() {
 	this.direction = 'right';
 };
 
-// Actions on die / bonuses / portals / bombs
+/**
+* Snake's death
+*/
 Snake.prototype.onDie = function() {
 	this.reset();
 	this.deaths++;
 	this.score /= 2;
 };
 
+/**
+* Snake's kill
+*/
 Snake.prototype.onKill = function() {
 	this.kills++;
 	this.score += 10;
 };
 
+/**
+* Snake touch a bonus
+*/
 Snake.prototype.onBonus = function() {
 	this.goodies++;
 	this.score += 5;
 };
 
+/**
+* Snake teleportation
+*/
 Snake.prototype.onPortal = function() {
 	this.elements[this.currentLength-1].x = Math.floor(Math.random() * this.STAGE_WIDTH);
 	this.elements[this.currentLength-1].y = Math.floor(Math.random() * this.STAGE_HEIGHT);
 };
 
-// Check the contact with an element 
-
+/**
+* Check the contact with an element 
+*/
 Snake.prototype.hasColision = function(element) {
 	var head = this.elements[this.currentLength-1];
 
@@ -126,8 +155,9 @@ Snake.prototype.hasColision = function(element) {
 	return false;
 };
 
-
-// Add a new element on the snake
+/**
+*Add a new element on the snake
+*/
 Snake.prototype.grow = function() {
 	var old_pos = this.elements[0];
 

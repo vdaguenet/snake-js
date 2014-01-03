@@ -1,3 +1,7 @@
+/**
+* Bonus
+* Grow the snake
+*/
 exports.Bonus = Bonus = function () {
 	this.STAGE_HEIGHT = 50 - 1;
 	this.STAGE_WIDTH = 50 - 1;
