@@ -1,6 +1,8 @@
 Snake JS
 ======================
-The clasic Snake game revisited on an online version developed using Node.js and Socket.io.
+The clasic game Snake revisited on an online multiplayer version,
+developed using Node.js and Socket.io.
+
 Project started during formation with [@Divi](https://github.com/Divi).
 
 Requirements :
