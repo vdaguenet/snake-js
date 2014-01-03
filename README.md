@@ -1,12 +1,25 @@
-# Snake JS
-The clasic Snake game, developed using Node.JS and Socket.IO.
-Project started during formation with [Sylvain Lorinet](https://github.com/Divi) and continued personaly.
+Snake JS
+======================
+The clasic Snake game revisited on an online version developed using Node.js and Socket.io.
+Project started during formation with [@Divi](https://github.com/Divi).
 
-## Formation version
-- Server Node.JS.
-- Classic game concepts.
-- Portals : teleport the snake to a random position.
+Requirements :
+-------------
+- [Express JS](http://expressjs.com/)
+- [Socket.io](http://socket.io/)
+- [HTTP module](http://nodejs.org/api/http.html)
+- [Events module](http://nodejs.org/api/events.html)
 
-## Personal version
-- Bombs : divide other players snake into two parts.
-- Wall : snake dies when he touches it.
+Change logs:
+------------
+- TODO :
+	- Design the page
+	- Possibility to named his snake
+
+- v0.1:
+	- Scoreboard with others players.
+	- Portals : teleport the snake to a random position.
+
+- v0 (during formation):
+	- App concepts (snake movements, growth and death).
+	- Server implementation.
