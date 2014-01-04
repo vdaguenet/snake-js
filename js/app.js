@@ -73,7 +73,7 @@ function checkColisions () {
 			// s1 touch a bomb
 			if (snakes[s1].hasColision(bombs[k])) { 
 				bombs[k].onTouch(snakes[s1]);
-				bombs.splice(j, 1);
+				bombs.splice(k, 1);
 				break;
 			}	
 		}
