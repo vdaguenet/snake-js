@@ -33,11 +33,6 @@ Server.prototype.startSockets = function () {
 	// the socket listen the server
 	this.socket = io.listen(this.server); 
 	
-	// set the log level
-	this.socket.configure(function () {
-		this.socket.set('log level', 1); 
-	}.bind(this));
-	
 	// Set snakeId on each client connection
 	this.socket.of('/snake').on('connection', function (client) { 
 		client.snakeId = this.clientId; 

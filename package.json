@@ -1,0 +1,32 @@
+{
+  "name": "snake-js",
+  "version": "0.0.0",
+  "description": "The classic game revisited",
+  "main": "public/app.js",
+  "dependencies": {
+    "express": "^4.4.5",
+    "socket.io": "^1.0.6"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/vdaguenet/snake-js.git"
+  },
+  "keywords": [
+    "js",
+    "node",
+    "express",
+    "game",
+    "socket",
+    "pultiplayer"
+  ],
+  "author": "vdaguenet",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/vdaguenet/snake-js/issues"
+  },
+  "homepage": "https://github.com/vdaguenet/snake-js"
+}
